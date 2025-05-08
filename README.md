@@ -4,8 +4,7 @@ This is a fully local, AI-powered recommendation system designed to suggest the 
 
 Whether you're an HR tech enthusiast or just exploring GenAI projects, this tool gives you a practical example of combining embeddings, vector search, and a modern API layer.
 🔍 What It Does
-
-    Locally runs everything – No OpenAI, no cloud. All embeddings and vector searches happen on your machine.
+     All embeddings and vector searches happen on your machine.
 
     Smart matching – Uses sentence transformers to understand the meaning of input and catalog descriptions.
 
