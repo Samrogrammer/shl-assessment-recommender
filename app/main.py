@@ -10,11 +10,11 @@ import uvicorn
 from recommender import SHLRecommender, get_default_catalog_path
 
 
-# Configure logging
+#  logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Define API models
+#  API models
 class RecommendationRequest(BaseModel):
     query: str
     top_k: Optional[int] = 5
@@ -23,14 +23,14 @@ class RecommendationResponse(BaseModel):
     recommendations: List[Dict[str, Any]]
     query: str
 
-# Initialize FastAPI app
+# Initializes FastAPI app
 app = FastAPI(
     title="SHL Assessment Recommendation Engine",
     description="A local vector-search based recommendation system for SHL assessments",
     version="1.0.0"
 )
 
-# Add CORS middleware
+#  CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # For production, specify exact origins
@@ -82,7 +82,7 @@ async def recommend_assessments(request: RecommendationRequest):
 @app.post("/upload")
 async def upload_catalog(file: UploadFile = File(...)):
     """
-    Upload and index a new SHL assessment catalog
+    Uploads and index a new SHL assessment catalog
     
     Parameters:
     - file: JSON file containing assessment catalog data
@@ -98,11 +98,11 @@ async def upload_catalog(file: UploadFile = File(...)):
         contents = await file.read()
         catalog_data = json.loads(contents)
         
-        # Validate catalog structure
+        # Validates catalog structure
         if not isinstance(catalog_data, list):
             raise HTTPException(status_code=400, detail="Catalog must be a JSON array of assessments")
         
-        # Update the recommender with new catalog data
+        # Updates with new catalog data
         recommender.update_catalog(catalog_data)
         
         return {
@@ -118,7 +118,7 @@ async def upload_catalog(file: UploadFile = File(...)):
 @app.get("/catalog")
 async def get_catalog(limit: int = Query(10, ge=1, le=100)):
     """
-    View the current assessment catalog
+    
     
     Parameters:
     - limit: Maximum number of assessments to return (default: 10)
@@ -138,5 +138,5 @@ async def get_catalog(limit: int = Query(10, ge=1, le=100)):
         raise HTTPException(status_code=500, detail=f"Error retrieving catalog: {str(e)}")
 
 if __name__ == "__main__":
-    # Run the API server when script is executed directly
+    # will run the API server when script is executed directly
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
