@@ -1,11 +1,11 @@
 [phases]
-setup = "python3, gcc, python3-pip"  # Added explicit pip
+setup = { pkgs = ["python3", "gcc", "python3-pip"] }  # Correct package specification
 
 [phases.install]
 commands = [
   "python -m venv --copies /opt/venv",
-  ". /opt/venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt"  # Added pip upgrade
+  ". /opt/venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt"
 ]
 
 [start]
-command = "bash ./start.sh"  # Explicit bash interpreter
+command = "./start.sh"
