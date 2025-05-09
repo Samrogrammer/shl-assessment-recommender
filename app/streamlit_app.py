@@ -12,6 +12,7 @@ import pandas as pd
 from typing import List, Dict, Any
 
 
+API_URL = "https://shl-assessment-project.up.railway.app/" 
 # Constants
 API_URL = os.getenv("API_URL", "shl-assessment-project.up.railway.app")  #  Use Railway URL
 RECOMMENDATION_ENDPOINT = f"{API_URL}/recommend"

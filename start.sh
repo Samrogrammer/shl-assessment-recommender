@@ -1,6 +1,10 @@
 #!/bin/bash
 
-# Start FastAPI backnd
-uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} &
+# Start FastAPI (ensure correct directory)
+cd /app/app && \
+uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000} &
 
+# Start Streamlit (with explicit backend URL)
+cd /app && \
+API_URL="https://shl-assessment-project.up.railway.app" \
 streamlit run streamlit_app.py --server.port ${STREAMLIT_PORT:-8501} --server.address=0.0.0.0
