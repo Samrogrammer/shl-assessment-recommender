@@ -7,7 +7,7 @@ import json
 import logging
 import uvicorn
 
-from recommender import SHLRecommender, get_default_catalog_path
+from app.recommender import SHLRecommender, get_default_catalog_path
 
 
 #  logging
