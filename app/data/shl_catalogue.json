@@ -1,0 +1,227 @@
+[
+  {
+    "id": "shl-001",
+    "name": "OPQ32 (Occupational Personality Questionnaire)",
+    "description": "The OPQ32 is SHL's flagship personality questionnaire designed to give organizations an understanding of how aspects of an individual's behavioral style will affect their performance at work. It measures 32 specific personality characteristics that influence work performance and provides insights into preferred working style and behavior.",
+    "tags": ["personality", "behavioral", "work style", "motivation", "leadership style", "work preferences"],
+    "category": "Behavioral Assessment",
+    "duration_minutes": 45,
+    "recommended_roles": ["Management", "Leadership", "Professional", "Graduate", "All Levels"]
+  },
+  {
+    "id": "shl-002",
+    "name": "Verify Verbal Reasoning",
+    "description": "Verify Verbal Reasoning assesses a candidate's ability to understand written information and evaluate arguments and statements. Candidates must analyze complex verbal information and determine whether conclusions are valid. This test identifies individuals who can comprehend and critically evaluate written information effectively.",
+    "tags": ["verbal", "reasoning", "critical thinking", "comprehension", "language skills"],
+    "category": "Cognitive Ability",
+    "duration_minutes": 19,
+    "recommended_roles": ["Management", "Graduate", "Professional", "Administrative"]
+  },
+  {
+    "id": "shl-003",
+    "name": "Verify Numerical Reasoning",
+    "description": "Verify Numerical Reasoning measures a candidate's ability to make correct decisions or inferences from numerical data. The assessment presents data in statistical tables and requires candidates to interpret the information and determine what conclusions can be accurately drawn.",
+    "tags": ["numerical", "reasoning", "data analysis", "mathematics", "problem solving", "quantitative"],
+    "category": "Cognitive Ability",
+    "duration_minutes": 25,
+    "recommended_roles": ["Financial", "Accounting", "Analysis", "Management", "Professional"]
+  },
+  {
+    "id": "shl-004",
+    "name": "Verify Inductive Reasoning",
+    "description": "Verify Inductive Reasoning evaluates a candidate's ability to identify patterns and logical rules in abstract information and to predict what comes next. The assessment is particularly useful for roles requiring problem-solving with abstract concepts or identifying trends and patterns in data sets.",
+    "tags": ["inductive", "reasoning", "pattern recognition", "logic", "problem solving", "abstract thinking"],
+    "category": "Cognitive Ability",
+    "duration_minutes": 25,
+    "recommended_roles": ["Technology", "Engineering", "Analysis", "Strategy", "Research"]
+  },
+  {
+    "id": "shl-005",
+    "name": "Verify Mechanical Comprehension",
+    "description": "Verify Mechanical Comprehension measures a candidate's understanding of basic mechanical principles and their application. The test evaluates comprehension of physical concepts relating to movement, forces, and energy, making it suitable for engineering and technical roles.",
+    "tags": ["mechanical", "engineering", "physics", "technical", "spatial reasoning"],
+    "category": "Technical Skills",
+    "duration_minutes": 20,
+    "recommended_roles": ["Engineering", "Technical", "Manufacturing", "Maintenance", "Construction"]
+  },
+  {
+    "id": "shl-006",
+    "name": "Situational Judgement Test",
+    "description": "SHL's Situational Judgement Test measures judgement and decision-making in workplace scenarios. It presents realistic workplace situations and asks candidates to choose the most effective way to respond, helping predict how they'll handle job-relevant situations.",
+    "tags": ["situational judgment", "decision making", "workplace behavior", "effectiveness", "job fit"],
+    "category": "Behavioral Assessment",
+    "duration_minutes": 30,
+    "recommended_roles": ["Customer Service", "Sales", "Management", "Team Leaders", "Professional"]
+  },
+  {
+    "id": "shl-007",
+    "name": "ADEPT-15 Personality Assessment",
+    "description": "ADEPT-15 is an adaptive personality assessment that measures 15 distinct personality traits that predict work performance. It provides deep insight into work behavior, motivation, and interpersonal style using an innovative item format that increases candidate engagement and reduces faking.",
+    "tags": ["personality", "work behavior", "motivation", "adaptive", "workplace fit"],
+    "category": "Behavioral Assessment",
+    "duration_minutes": 25,
+    "recommended_roles": ["Management", "Individual Contributors", "Professional", "All Roles"]
+  },
+  {
+    "id": "shl-008",
+    "name": "MQ (Motivation Questionnaire)",
+    "description": "The Motivation Questionnaire identifies the activities and tasks that individuals find rewarding and enjoyable at work. It measures 18 dimensions of motivation, providing insights into what drives an individual's engagement and satisfaction in their role.",
+    "tags": ["motivation", "engagement", "job satisfaction", "work preferences", "values"],
+    "category": "Behavioral Assessment",
+    "duration_minutes": 25,
+    "recommended_roles": ["All Levels", "Management", "Professional", "Sales"]
+  },
+  {
+    "id": "shl-009",
+    "name": "SHL Coding Assessment",
+    "description": "SHL's Coding Assessment evaluates a candidate's programming abilities through real-world coding challenges. It tests coding skills, problem-solving approaches, and code quality across multiple programming languages, allowing organizations to objectively evaluate technical talent.",
+    "tags": ["coding", "programming", "technical skills", "software development", "problem solving"],
+    "category": "Technical Skills",
+    "duration_minutes": 60,
+    "recommended_roles": ["Software Developer", "Programmer", "Software Engineer", "Web Developer", "Technical Roles"]
+  },
+  {
+    "id": "shl-010",
+    "name": "Remote Work Questionnaire",
+    "description": "SHL's Remote Work Questionnaire assesses a candidate's suitability for remote or hybrid work arrangements. It evaluates key characteristics that predict success in remote environments, including self-motivation, communication skills, and the ability to work independently.",
+    "tags": ["remote work", "work style", "self-management", "communication", "independence"],
+    "category": "Behavioral Assessment",
+    "duration_minutes": 20,
+    "recommended_roles": ["Remote Positions", "Hybrid Roles", "Virtual Teams", "Flexible Working Arrangements"]
+  },
+  {
+    "id": "shl-011",
+    "name": "General Ability Test",
+    "description": "SHL's General Ability Test provides a holistic assessment of cognitive capabilities, measuring verbal, numerical, and abstract reasoning in a single assessment. It's an efficient way to measure overall cognitive potential across multiple dimensions.",
+    "tags": ["general ability", "cognitive", "reasoning", "problem solving", "intelligence"],
+    "category": "Cognitive Ability",
+    "duration_minutes": 36,
+    "recommended_roles": ["Graduate", "Professional", "Management", "High-Potential"]
+  },
+  {
+    "id": "shl-012",
+    "name": "Verify Interactive",
+    "description": "Verify Interactive combines multiple cognitive assessments in a single, engaging test experience. It measures verbal, numerical, and inductive reasoning abilities through a modern, candidate-friendly interface that improves the assessment experience.",
+    "tags": ["interactive", "cognitive", "reasoning", "modern", "candidate experience"],
+    "category": "Cognitive Ability",
+    "duration_minutes": 30,
+    "recommended_roles": ["Graduate", "Professional", "Management", "High-Volume Recruitment"]
+  },
+  {
+    "id": "shl-013",
+    "name": "Call Center Assessment",
+    "description": "The Call Center Assessment is designed specifically for customer service and call center roles. It evaluates key competencies including customer orientation, problem-solving, multitasking, and communication skills that predict success in customer support positions.",
+    "tags": ["call center", "customer service", "communication", "problem solving", "multitasking"],
+    "category": "Role-Specific Assessment",
+    "duration_minutes": 35,
+    "recommended_roles": ["Call Center Representative", "Customer Support", "Help Desk", "Service Desk"]
+  },
+  {
+    "id": "shl-014",
+    "name": "Sales Assessment",
+    "description": "SHL's Sales Assessment identifies individuals with the potential to succeed in sales roles. It evaluates key sales competencies including relationship building, influence, resilience, and achievement motivation that are critical for sales success.",
+    "tags": ["sales aptitude", "relationship building", "persuasion", "resilience", "goal orientation"],
+    "category": "Role-Specific Assessment",
+    "duration_minutes": 35,
+    "recommended_roles": ["Sales Representative", "Account Executive", "Business Development", "Sales Manager"]
+  },
+  {
+    "id": "shl-015",
+    "name": "Workplace English Assessment",
+    "description": "The Workplace English Assessment evaluates a candidate's ability to use English effectively in business contexts. It measures reading comprehension, grammar, vocabulary, and written communication skills required in professional environments.",
+    "tags": ["english proficiency", "business english", "communication", "language skills", "writing"],
+    "category": "Language Proficiency",
+    "duration_minutes": 30,
+    "recommended_roles": ["International Roles", "Client-Facing Positions", "Corporate Communications", "Global Teams"]
+  },
+  {
+    "id": "shl-016",
+    "name": "Leadership Assessment",
+    "description": "SHL's Leadership Assessment measures critical leadership competencies and potential. It evaluates strategic thinking, people management, decision making, and other key leadership capabilities to identify and develop effective leaders.",
+    "tags": ["leadership", "management", "strategic thinking", "people skills", "decision making"],
+    "category": "Leadership Assessment",
+    "duration_minutes": 45,
+    "recommended_roles": ["Managers", "Directors", "Executives", "Team Leaders", "High-Potential Talent"]
+  },
+  {
+    "id": "shl-017",
+    "name": "Workplace Safety Assessment",
+    "description": "The Workplace Safety Assessment identifies candidates who are likely to follow safety procedures and demonstrate safe behavior in the workplace. It measures safety consciousness, rule adherence, and risk awareness critical for roles where safety is paramount.",
+    "tags": ["safety", "risk awareness", "rule compliance", "accident prevention", "occupational health"],
+    "category": "Role-Specific Assessment",
+    "duration_minutes": 20,
+    "recommended_roles": ["Manufacturing", "Construction", "Transportation", "Healthcare", "Logistics"]
+  },
+  {
+    "id": "shl-018",
+    "name": "Deductive Reasoning Test",
+    "description": "The Deductive Reasoning Test assesses a candidate's ability to draw logical conclusions based on provided information. It measures how well candidates can apply rules and detect logical patterns to solve problems, particularly important for roles requiring analytical thinking.",
+    "tags": ["deductive reasoning", "logical thinking", "problem solving", "analytical skills", "critical thinking"],
+    "category": "Cognitive Ability",
+    "duration_minutes": 25,
+    "recommended_roles": ["Analysts", "Consultants", "Legal Professionals", "Research", "Technical Roles"]
+  },
+  {
+    "id": "shl-019",
+    "name": "Microsoft Office Skills Test",
+    "description": "SHL's Microsoft Office Skills Tests evaluate proficiency in key Office applications including Word, Excel, PowerPoint, and Outlook. These practical assessments measure real-world software skills required for administrative and professional roles.",
+    "tags": ["microsoft office", "software skills", "excel", "word", "powerpoint", "technical skills"],
+    "category": "Technical Skills",
+    "duration_minutes": 30,
+    "recommended_roles": ["Administrative", "Office Support", "Professional", "Business Operations"]
+  },
+  {
+    "id": "shl-020",
+    "name": "Reliability Scale",
+    "description": "The Reliability Scale predicts counterproductive work behaviors by assessing a candidate's attitudes toward workplace integrity, adherence to rules, and ethical decision making. It helps identify candidates who demonstrate reliability, trustworthiness, and professional conduct.",
+    "tags": ["reliability", "integrity", "ethics", "counterproductive behavior", "rule adherence"],
+    "category": "Behavioral Assessment",
+    "duration_minutes": 15,
+    "recommended_roles": ["All Positions", "Positions of Trust", "Customer-Facing Roles", "Security Roles"]
+  },
+  {
+    "id": "shl-021",
+    "name": "Reading Comprehension Test",
+    "description": "The Reading Comprehension Test measures a candidate's ability to read, understand, and extract key information from written text. It evaluates how effectively candidates can process written information, follow instructions, and draw accurate conclusions.",
+    "tags": ["reading", "comprehension", "information processing", "written communication", "attention to detail"],
+    "category": "Cognitive Ability",
+    "duration_minutes": 20,
+    "recommended_roles": ["Administrative", "Customer Service", "Professional", "Documentation Roles"]
+  },
+  {
+    "id": "shl-022",
+    "name": "Digital Readiness Assessment",
+    "description": "The Digital Readiness Assessment evaluates a candidate's ability to learn and adapt to new technology. It measures digital literacy, technological problem-solving, and comfort with digital tools that are increasingly important in today's workplace.",
+    "tags": ["digital skills", "technology adoption", "digital literacy", "adaptability", "technological comfort"],
+    "category": "Technical Skills",
+    "duration_minutes": 25,
+    "recommended_roles": ["Digital Transformation", "Technology Adoption", "Modern Workplace Roles"]
+  },
+  {
+    "id": "shl-023",
+    "name": "SHL Verify G+ General Reasoning Test",
+    "description": "SHL Verify G+ is a comprehensive cognitive ability test that measures verbal, numerical, and inductive reasoning in a single assessment. It provides a holistic view of a candidate's reasoning capabilities across multiple dimensions.",
+    "tags": ["general reasoning", "cognitive ability", "verbal", "numerical", "inductive", "problem solving"],
+    "category": "Cognitive Ability",
+    "duration_minutes": 36,
+    "recommended_roles": ["Graduate", "Professional", "Management", "High-Potential Talent"]
+  },
+  {
+    "id": "shl-024",
+    "name": "Customer Contact Styles Questionnaire (CCSQ)",
+    "description": "The CCSQ measures behavioral preferences and personal characteristics that are important for success in customer service roles. It assesses 16 dimensions of behavior and personality that relate specifically to effective customer interaction.",
+    "tags": ["customer service", "behavioral style", "interpersonal skills", "service orientation", "communication"],
+    "category": "Role-Specific Assessment",
+    "duration_minutes": 25,
+    "recommended_roles": ["Customer Service Representative", "Call Center Agent", "Client Relations", "Support Roles"]
+  },
+  {
+    "id": "shl-025",
+    "name": "Work Strengths Assessment",
+    "description": "The Work Strengths Assessment identifies a candidate's key strengths and work preferences across multiple dimensions. It provides insights into work style, motivators, and behavioral preferences that predict job fit and performance.",
+    "tags": ["strengths", "work style", "preferences", "behavioral tendencies", "job fit"],
+    "category": "Behavioral Assessment",
+    "duration_minutes": 20,
+    "recommended_roles": ["All Positions", "Entry-Level", "Individual Contributors", "Team Members"]
+  }
+]
