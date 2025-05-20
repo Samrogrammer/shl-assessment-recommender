@@ -13,7 +13,7 @@ from typing import List, Dict, Any
 
 
 # Constants
-API_URL = os.getenv("API_URL","https://shl-assessment-project.up.railway.app/")
+API_URL = os.getenv("API_URL","https://shl-assessment-recommender-7znk.onrender.com")
 RECOMMENDATION_ENDPOINT = f"{API_URL}/recommend"
 UPLOAD_ENDPOINT = f"{API_URL}/upload"
 CATALOG_ENDPOINT = f"{API_URL}/catalog"

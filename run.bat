@@ -24,7 +24,7 @@ timeout /t 3 /nobreak > nul
 
 REM Start Streamlit frontend
 echo Starting Streamlit frontend...
-streamlit run app\streamlit_app.py
+streamlit run streamlit_app.py
 
 
 echo Shutting down...
