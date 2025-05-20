@@ -26,6 +26,4 @@ Thumbs.db
 # Ignoring logs
 *.log
 
-# Ignore local data , uploads
-app/data/*.json
-!app/data/shl_catalogue.json  # Keep the mock/sample catalogue if needed
+
