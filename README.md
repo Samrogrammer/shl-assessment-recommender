@@ -1,10 +1,11 @@
 🚀 SHL Assessment Recommendation Engine
 
-This is a fully local, AI-powered recommendation system designed to suggest the most relevant SHL assessments for a given job role, skills list, or job description — all without needing cloud services or external APIs.
+This is a  AI-powered recommendation system designed to suggest the most relevant SHL assessments for a given job role, skills list, or job description — all without needing cloud services or external APIs.
 
 Whether you're an HR tech enthusiast or just exploring GenAI projects, this tool gives you a practical example of combining embeddings, vector search, and a modern API layer.
 🔍 What It Does
-     All embeddings and vector searches happen on your machine.
+
+    Locally runs everything – No OpenAI, no cloud. All embeddings and vector searches happen on your machine.
 
     Smart matching – Uses sentence transformers to understand the meaning of input and catalog descriptions.
 
@@ -49,7 +50,7 @@ API (FastAPI)
 cd app
 uvicorn main:app --reload
 
-Docs at: http://localhost:8000/docs
+Docs at: (https://shl-assessment-project.up.railway.app/)/docs
 Frontend (Streamlit)
 
 streamlit run streamlit_app.py

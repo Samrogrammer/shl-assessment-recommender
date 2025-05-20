@@ -7,7 +7,8 @@ evaluates the quality of recommendations.
 
 import os
 import json
-from app.recommender import SHLRecommender
+from app.recommender import SHLRecommender, get_default_catalog_path
+
 import logging
 from typing import List, Dict, Any
 import numpy as np
