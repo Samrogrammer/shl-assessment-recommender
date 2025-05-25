@@ -50,7 +50,7 @@ API (FastAPI)
 cd app
 uvicorn main:app --reload
 
-Docs at: (https://shl-assessment-recommender-7znk.onrender.com/)/docs
+Docs at: (https://shl-assessment-recommender-7znk.onrender.com/docs
 Frontend (Streamlit)
 
 streamlit run streamlit_app.py
