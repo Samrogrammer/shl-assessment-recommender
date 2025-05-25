@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException, Query
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
@@ -43,19 +44,28 @@ app.add_middleware(
 catalog_path = get_default_catalog_path()
 recommender = SHLRecommender(catalog_path=catalog_path)
 
-@app.get("/")
-def read_root():
-    """Root endpoint with basic API information"""
-    return {
-        "name": "SHL Assessment Recommendation Engine",
-        "version": "1.0.0",
-        "status": "active",
-        "endpoints": [
-            {"path": "/recommend", "method": "POST", "description": "Get assessment recommendations"},
-            {"path": "/upload", "method": "POST", "description": "Upload and index a new catalog"},
-            {"path": "/catalog", "method": "GET", "description": "View current catalog"}
-        ]
-    }
+@app.get("/catalog")
+async def get_catalog(limit: int = Query(10, ge=1, le=100)):
+    """Returns paginated catalog data"""
+    try:
+        # Get absolute path to JSON file
+        file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "app/data/shl_catalogue.json")
+        
+        with open(file_path) as f:
+            catalog = json.load(f)
+            
+        return {
+            "total": len(catalog),
+            "showing": min(limit, len(catalog)),
+            "assessments": catalog[:limit]
+        }
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Catalog file not found")
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail="Invalid catalog JSON format")
+    except Exception as e:
+        logger.error(f"Catalog Error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/recommend", response_model=RecommendationResponse)
 async def recommend_assessments(request: RecommendationRequest):
@@ -140,3 +150,25 @@ async def get_catalog(limit: int = Query(10, ge=1, le=100)):
 if __name__ == "__main__":
     # will run the API server when script is executed directly
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+# After CORS middleware
+@app.get("/health")
+async def health_check():
+    """Endpoint for service health monitoring"""
+    try:
+        # Verify catalog file exists
+        catalog_path = get_default_catalog_path()
+        if not os.path.exists(catalog_path):
+            raise Exception("Catalog file missing")
+        
+        # Verify recommender is initialized
+        if not hasattr(recommender, 'assessments'):
+            raise Exception("Recommender not initialized")
+        
+        return {
+            "status": "healthy",
+            "catalog_entries": len(recommender.assessments),
+            "version": "1.0.0"
+        }
+    except Exception as e:
+        logger.error(f"Health Check Failed: {str(e)}")
+        raise HTTPException(status_code=503, detail=f"Service Unhealthy: {str(e)}")

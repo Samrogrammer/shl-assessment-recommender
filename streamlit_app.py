@@ -65,22 +65,21 @@ def upload_catalog(file):
         return None
 
 def get_catalog():
-    """Get the current assessment catalog"""
     try:
         response = requests.get(
-            CATALOG_ENDPOINT,
-            headers=HEADERS,  # ← Add headers
+            f"{API_URL}/catalog",
+            headers=HEADERS,
             timeout=5
         )
+        if response.status_code == 404:
+            st.error("Catalog file not found on server")
+            return []
         response.raise_for_status()
-        data = response.json()
-        st.json(data)
-        # Handle both list and {'assessments': [...]} formats
-        return data if isinstance(data, list) else data.get('assessments', [])
-        
-    except Exception as e:
-        st.error(f"Error fetching catalog: {str(e)}")
+        return response.json().get("assessments", [])
+    except requests.exceptions.RequestException as e:
+        st.error(f"Connection Error: {str(e)}")
         return []
+   
 
 # Sidebar
 st.sidebar.title("SHL Assessment Recommender")

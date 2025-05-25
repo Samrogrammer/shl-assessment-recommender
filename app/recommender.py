@@ -135,16 +135,10 @@ class SHLRecommender:
 # Example function to find the default catalog path
 from pathlib import Path
 
-def get_default_catalog_path() -> str:
-    """
-    Get the default catalog path relative to this file
+def get_default_catalog_path():
+    return os.path.join(
+        os.path.dirname(os.path.dirname(__file__)),  # Go up two levels
+        "app/data/shl_catalogue.json"
+    )
     
-    Returns:
-        Path to the default catalog file
-    """
-    return str(Path(__file__).parent.parent / "app" / "data" / "shl_catalogue.json")
-    if os.path.exists(shl_catalog_path):
-        return shl_catalog_path
-    
-    # Fall back to the example catalog
-    return os.path.join(base_dir, "app", "data", "catalog.json")
+ 
