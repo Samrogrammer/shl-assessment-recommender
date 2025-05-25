@@ -14,6 +14,11 @@ from typing import List, Dict, Any
 
 # Constants
 API_URL = os.getenv("API_URL","https://shl-assessment-recommender-7znk.onrender.com")
+HEADERS = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "User-Agent": "SHL-Recommender/1.0"
+}
 RECOMMENDATION_ENDPOINT = f"{API_URL}/recommend"
 UPLOAD_ENDPOINT = f"{API_URL}/upload"
 CATALOG_ENDPOINT = f"{API_URL}/catalog"
@@ -32,10 +37,13 @@ def get_recommendations(query: str, top_k: int = 5) -> List[Dict[str, Any]]:
     try:
         response = requests.post(
             RECOMMENDATION_ENDPOINT,
-            json={"query": query, "top_k": top_k}
+            json={"query": query, "top_k": top_k},
+             headers=HEADERS,
+             timeout=10
         )
+       
         response.raise_for_status()
-        return response.json()["recommendations"]
+        return response.json().get("recommendations", []) 
     except Exception as e:
         st.error(f"Error fetching recommendations: {str(e)}")
         return []
@@ -43,8 +51,13 @@ def get_recommendations(query: str, top_k: int = 5) -> List[Dict[str, Any]]:
 def upload_catalog(file):
     """Upload a new catalog to the API"""
     try:
-        files = {"file": file}
-        response = requests.post(UPLOAD_ENDPOINT, files=files)
+        catalog_data = json.load(file)
+        response = requests.post(
+            UPLOAD_ENDPOINT,
+            json=catalog_data,  # Send as JSON
+            headers=HEADERS,
+            timeout=10
+        )
         response.raise_for_status()
         return response.json()
     except Exception as e:
@@ -54,9 +67,17 @@ def upload_catalog(file):
 def get_catalog():
     """Get the current assessment catalog"""
     try:
-        response = requests.get(f"{CATALOG_ENDPOINT}?limit=100")
+        response = requests.get(
+            CATALOG_ENDPOINT,
+            headers=HEADERS,  # ← Add headers
+            timeout=5
+        )
         response.raise_for_status()
-        return response.json()["assessments"]
+        data = response.json()
+        st.json(data)
+        # Handle both list and {'assessments': [...]} formats
+        return data if isinstance(data, list) else data.get('assessments', [])
+        
     except Exception as e:
         st.error(f"Error fetching catalog: {str(e)}")
         return []
