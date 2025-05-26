@@ -10,12 +10,11 @@ import uvicorn
 
 from app.recommender import SHLRecommender, get_default_catalog_path
 
-
-#  logging
+# Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-#  API models
+# API models
 class RecommendationRequest(BaseModel):
     query: str
     top_k: Optional[int] = 5
@@ -24,14 +23,14 @@ class RecommendationResponse(BaseModel):
     recommendations: List[Dict[str, Any]]
     query: str
 
-# Initializes FastAPI app
+# Initialize FastAPI app
 app = FastAPI(
     title="SHL Assessment Recommendation Engine",
     description="A local vector-search based recommendation system for SHL assessments",
     version="1.0.0"
 )
 
-#  CORS middleware
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # For production, specify exact origins
@@ -41,31 +40,78 @@ app.add_middleware(
 )
 
 # Create a global instance of the recommender
-catalog_path = get_default_catalog_path()
-recommender = SHLRecommender(catalog_path=catalog_path)
+try:
+    catalog_path = get_default_catalog_path()
+    logger.info(f"Loading catalog from: {catalog_path}")
+    
+    if not os.path.exists(catalog_path):
+        logger.error(f"Catalog file not found at: {catalog_path}")
+        # Try alternative path
+        alt_catalog_path = os.path.join(os.path.dirname(__file__), "data", "shl_catalogue.json")
+        if os.path.exists(alt_catalog_path):
+            catalog_path = alt_catalog_path
+            logger.info(f"Using alternative catalog path: {catalog_path}")
+        else:
+            raise FileNotFoundError(f"Catalog file not found at either {catalog_path} or {alt_catalog_path}")
+    
+    recommender = SHLRecommender(catalog_path=catalog_path)
+    logger.info(f"Recommender initialized successfully with {len(recommender.assessments)} assessments")
+    
+except Exception as e:
+    logger.error(f"Failed to initialize recommender: {e}")
+    recommender = None
+
+@app.get("/health")
+async def health_check():
+    """Endpoint for service health monitoring"""
+    try:
+        # Verify catalog file exists
+        catalog_path = get_default_catalog_path()
+        if not os.path.exists(catalog_path):
+            # Try alternative path
+            alt_catalog_path = os.path.join(os.path.dirname(__file__), "data", "shl_catalogue.json")
+            if not os.path.exists(alt_catalog_path):
+                raise Exception("Catalog file missing")
+        
+        # Verify recommender is initialized
+        if recommender is None or not hasattr(recommender, 'assessments'):
+            raise Exception("Recommender not initialized")
+        
+        return {
+            "status": "healthy",
+            "catalog_entries": len(recommender.assessments),
+            "version": "1.0.0"
+        }
+    except Exception as e:
+        logger.error(f"Health Check Failed: {str(e)}")
+        raise HTTPException(status_code=503, detail=f"Service Unhealthy: {str(e)}")
 
 @app.get("/catalog")
 async def get_catalog(limit: int = Query(10, ge=1, le=100)):
-    """Returns paginated catalog data"""
+    """
+    Returns paginated catalog data
+    
+    Parameters:
+    - limit: Maximum number of assessments to return (default: 10)
+    
+    Returns:
+    - List of assessments in the current catalog
+    """
     try:
-        # Get absolute path to JSON file
-        file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "app/data/shl_catalogue.json")
+        if recommender is None:
+            raise HTTPException(status_code=503, detail="Recommender service not initialized")
         
-        with open(file_path) as f:
-            catalog = json.load(f)
-            
+        assessments = recommender.assessments[:limit]
         return {
-            "total": len(catalog),
-            "showing": min(limit, len(catalog)),
-            "assessments": catalog[:limit]
+            "total": len(recommender.assessments),
+            "showing": len(assessments),
+            "assessments": assessments
         }
-    except FileNotFoundError:
-        raise HTTPException(status_code=404, detail="Catalog file not found")
-    except json.JSONDecodeError:
-        raise HTTPException(status_code=500, detail="Invalid catalog JSON format")
+    except HTTPException:
+        raise
     except Exception as e:
-        logger.error(f"Catalog Error: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Error retrieving catalog: {e}")
+        raise HTTPException(status_code=500, detail=f"Error retrieving catalog: {str(e)}")
 
 @app.post("/recommend", response_model=RecommendationResponse)
 async def recommend_assessments(request: RecommendationRequest):
@@ -80,11 +126,16 @@ async def recommend_assessments(request: RecommendationRequest):
     - List of recommended assessments with similarity scores
     """
     try:
+        if recommender is None:
+            raise HTTPException(status_code=503, detail="Recommender service not initialized")
+        
         recommendations = recommender.recommend(query=request.query, top_k=request.top_k)
         return {
             "recommendations": recommendations,
             "query": request.query
         }
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error generating recommendations: {e}")
         raise HTTPException(status_code=500, detail=f"Error generating recommendations: {str(e)}")
@@ -92,7 +143,7 @@ async def recommend_assessments(request: RecommendationRequest):
 @app.post("/upload")
 async def upload_catalog(file: UploadFile = File(...)):
     """
-    Uploads and index a new SHL assessment catalog
+    Upload and index a new SHL assessment catalog
     
     Parameters:
     - file: JSON file containing assessment catalog data
@@ -104,15 +155,18 @@ async def upload_catalog(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Only JSON files are accepted")
     
     try:
+        if recommender is None:
+            raise HTTPException(status_code=503, detail="Recommender service not initialized")
+        
         # Read and parse the uploaded file
         contents = await file.read()
         catalog_data = json.loads(contents)
         
-        # Validates catalog structure
+        # Validate catalog structure
         if not isinstance(catalog_data, list):
             raise HTTPException(status_code=400, detail="Catalog must be a JSON array of assessments")
         
-        # Updates with new catalog data
+        # Update recommender with new catalog data
         recommender.update_catalog(catalog_data)
         
         return {
@@ -121,54 +175,12 @@ async def upload_catalog(file: UploadFile = File(...)):
         }
     except json.JSONDecodeError:
         raise HTTPException(status_code=400, detail="Invalid JSON format")
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error processing catalog upload: {e}")
         raise HTTPException(status_code=500, detail=f"Error processing catalog: {str(e)}")
 
-@app.get("/catalog")
-async def get_catalog(limit: int = Query(10, ge=1, le=100)):
-    """
-    
-    
-    Parameters:
-    - limit: Maximum number of assessments to return (default: 10)
-    
-    Returns:
-    - List of assessments in the current catalog
-    """
-    try:
-        assessments = recommender.assessments[:limit]
-        return {
-            "total": len(recommender.assessments),
-            "showing": len(assessments),
-            "assessments": assessments
-        }
-    except Exception as e:
-        logger.error(f"Error retrieving catalog: {e}")
-        raise HTTPException(status_code=500, detail=f"Error retrieving catalog: {str(e)}")
-
 if __name__ == "__main__":
-    # will run the API server when script is executed directly
+    # Run the API server when script is executed directly
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
-# After CORS middleware
-@app.get("/health")
-async def health_check():
-    """Endpoint for service health monitoring"""
-    try:
-        # Verify catalog file exists
-        catalog_path = get_default_catalog_path()
-        if not os.path.exists(catalog_path):
-            raise Exception("Catalog file missing")
-        
-        # Verify recommender is initialized
-        if not hasattr(recommender, 'assessments'):
-            raise Exception("Recommender not initialized")
-        
-        return {
-            "status": "healthy",
-            "catalog_entries": len(recommender.assessments),
-            "version": "1.0.0"
-        }
-    except Exception as e:
-        logger.error(f"Health Check Failed: {str(e)}")
-        raise HTTPException(status_code=503, detail=f"Service Unhealthy: {str(e)}")

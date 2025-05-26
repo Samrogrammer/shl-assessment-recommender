@@ -136,9 +136,31 @@ class SHLRecommender:
 from pathlib import Path
 
 def get_default_catalog_path():
-    return os.path.join(
-        os.path.dirname(os.path.dirname(__file__)),  # Go up two levels
-        "app/data/shl_catalogue.json"
-    )
+    """
+    Get the default catalog path, trying multiple possible locations
+    """
+    import os
+    from pathlib import Path
     
- 
+    # Get the current file's directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Try multiple possible paths
+    possible_paths = [
+        # Standard path from app/recommender.py
+        os.path.join(current_dir, "data", "shl_catalogue.json"),
+        # Path from project root
+        os.path.join(os.path.dirname(current_dir), "app", "data", "shl_catalogue.json"),
+        # Alternative path structure
+        os.path.join(current_dir, "..", "data", "shl_catalogue.json"),
+        # Direct path if running from project root
+        os.path.join("app", "data", "shl_catalogue.json"),
+    ]
+    
+    for path in possible_paths:
+        full_path = os.path.abspath(path)
+        if os.path.exists(full_path):
+            return full_path
+    
+    # If none found, return the first (standard) path
+    return os.path.abspath(possible_paths[0])

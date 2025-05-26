@@ -139,9 +139,9 @@ if page == "Get Recommendations":
         ]
         
         for example in example_queries:
-            if st.button(example):
+            if st.button(example, key=f"example_{example}"):
                 st.session_state["query"] = example
-                st.experimental_rerun()
+                st.rerun()  # ← New method
 
 elif page == "View Catalog":
     st.title("📚 Assessment Catalog")
