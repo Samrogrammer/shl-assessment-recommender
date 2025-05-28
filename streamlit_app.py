@@ -13,7 +13,7 @@ from typing import List, Dict, Any
 
 
 # Constants
-API_URL = os.getenv("API_URL","https://shl-assessment-recommender-7znk.onrender.com")
+API_URL = os.getenv("https://shl-assessment-recommender-7znk.onrender.com","http://localhost:8000")
 HEADERS = {
     "Content-Type": "application/json",
     "Accept": "application/json",
