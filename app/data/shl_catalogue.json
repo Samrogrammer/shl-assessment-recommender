@@ -128,10 +128,10 @@
   {
     "id": "shl-015",
     "name": "Workplace English Assessment",
-    "description": "The Workplace English Assessment evaluates a candidate's ability to use English effectively in business contexts. It measures reading comprehension, grammar, vocabulary, and written communication skills required in professional environments.",
-    "tags": ["english proficiency", "business english", "communication", "language skills", "writing"],
-    "category": "Language Proficiency",
-    "duration_minutes": 30,
+    "description": "Evaluates English language proficiency in workplace contexts",
+    "tags": ["english", "language", "communication", "workplace"],
+    "category": "Language Assessment", 
+    "duration_minutes": 45,
     "recommended_roles": ["International Roles", "Client-Facing Positions", "Corporate Communications", "Global Teams"]
   },
   {

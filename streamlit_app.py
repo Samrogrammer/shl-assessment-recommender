@@ -10,10 +10,16 @@ import json
 import os
 import pandas as pd
 from typing import List, Dict, Any
-
+import logging
+logging.basicConfig(level=logging.INFO)
 
 # Constants
-API_URL = os.getenv("https://shl-assessment-recommender-7znk.onrender.com","http://localhost:8000")
+# In streamlit_app.py
+import os
+
+# For production (Render) - will use the environment variable
+# For local development - falls back to localhost
+API_URL = os.getenv("API_URL", "https://shl-assessment-recommender-7znk.onrender.com")
 HEADERS = {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -35,17 +41,35 @@ st.set_page_config(
 def get_recommendations(query: str, top_k: int = 5) -> List[Dict[str, Any]]:
     """Get recommendations from the API"""
     try:
+        logging.info(f"Making request to {RECOMMENDATION_ENDPOINT}")
         response = requests.post(
             RECOMMENDATION_ENDPOINT,
             json={"query": query, "top_k": top_k},
-             headers=HEADERS,
-             timeout=10
+            headers=HEADERS,
+            timeout=30  # Increased timeout for Render's cold starts
         )
-       
+        
+        logging.info(f"API Response Status: {response.status_code}")
+        
+        if response.status_code != 200:
+            logging.error(f"API Error: {response.text}")
+            st.error(f"API Error (Status {response.status_code}): {response.text}")
+            return []
+            
         response.raise_for_status()
-        return response.json().get("recommendations", []) 
+        data = response.json()
+        logging.info(f"Received {len(data.get('recommendations', []))} recommendations")
+        return data.get("recommendations", [])
+        
+    except requests.exceptions.Timeout:
+        st.error("Request timed out. The server might be starting up (cold start). Please try again.")
+        return []
+    except requests.exceptions.ConnectionError:
+        st.error("Could not connect to the API. Please check if the service is running.")
+        return []
     except Exception as e:
         st.error(f"Error fetching recommendations: {str(e)}")
+        logging.exception("Recommendation error")
         return []
 
 def upload_catalog(file):
@@ -66,18 +90,12 @@ def upload_catalog(file):
 
 def get_catalog():
     try:
-        response = requests.get(
-            f"{API_URL}/catalog",
-            headers=HEADERS,
-            timeout=5
-        )
-        if response.status_code == 404:
-            st.error("Catalog file not found on server")
-            return []
-        response.raise_for_status()
-        return response.json().get("assessments", [])
-    except requests.exceptions.RequestException as e:
-        st.error(f"Connection Error: {str(e)}")
+        with open("app/data/shl_catalogue.json", "r") as f:
+            catalog = json.load(f)
+            st.success(f"Loaded {len(catalog)} assessments")
+            return catalog
+    except Exception as e:
+        st.error(f"Error loading catalog: {str(e)}")
         return []
    
 
@@ -110,7 +128,9 @@ if page == "Get Recommendations":
     if st.button("Get Recommendations"):
         if query:
             with st.spinner("Finding the best assessments..."):
+                logging.info(f"Searching with query: {query}")
                 recommendations = get_recommendations(query, top_k)
+                logging.info(f"Found {len(recommendations)} recommendations")
             
             if recommendations:
                 st.success(f"Found {len(recommendations)} relevant assessments")
