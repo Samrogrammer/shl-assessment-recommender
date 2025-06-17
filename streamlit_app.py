@@ -11,6 +11,8 @@ import os
 import pandas as pd
 from typing import List, Dict, Any
 import logging
+from urllib.parse import urljoin
+
 logging.basicConfig(level=logging.INFO)
 
 # Constants
@@ -19,15 +21,16 @@ import os
 
 # For production (Render) - will use the environment variable
 # For local development - falls back to localhost
-API_URL = os.getenv("API_URL", "https://shl-assessment-recommender-7znk.onrender.com")
+API_URL = os.getenv("API_URL", "https://shl-assessment-recommender-7znk.onrender.com").rstrip('/')
+RECOMMENDATION_ENDPOINT = urljoin(API_URL, "/recommend")
+UPLOAD_ENDPOINT = urljoin(API_URL, "/upload")
+CATALOG_ENDPOINT = urljoin(API_URL, "/catalog")
+
 HEADERS = {
     "Content-Type": "application/json",
     "Accept": "application/json",
     "User-Agent": "SHL-Recommender/1.0"
 }
-RECOMMENDATION_ENDPOINT = f"{API_URL}/recommend"
-UPLOAD_ENDPOINT = f"{API_URL}/upload"
-CATALOG_ENDPOINT = f"{API_URL}/catalog"
 
 # Page configuration
 st.set_page_config(

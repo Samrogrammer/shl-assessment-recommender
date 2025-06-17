@@ -363,7 +363,6 @@ async def debug_info():
     }
 
 if __name__ == "__main__":
-    # Run the API server when script is executed directly
+    import os
     port = int(os.getenv("PORT", 8000))
-    logger.info(f"Starting server on port {port}")
     uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
