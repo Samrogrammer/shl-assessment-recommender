@@ -171,17 +171,11 @@ async def health_check():
 @app.get("/catalog")
 async def get_catalog(limit: int = Query(25, ge=1, le=100)):
     """Returns paginated catalog data with better error handling"""
+    global catalog_data  # ✅ declare global early
+
     try:
         if not catalog_data:
-            # Try to reload catalog if empty
-            global catalog_data
             catalog_data = load_catalog()
-            
-            if not catalog_data:
-                raise HTTPException(
-                    status_code=404, 
-                    detail="No assessments found in the catalog. Please check if catalog file exists and is properly formatted."
-                )
         
         assessments = catalog_data[:limit] if catalog_data else []
         return {
@@ -195,6 +189,7 @@ async def get_catalog(limit: int = Query(25, ge=1, le=100)):
     except Exception as e:
         logger.error(f"Error retrieving catalog: {e}")
         raise HTTPException(status_code=500, detail=f"Error retrieving catalog: {str(e)}")
+
 
 @app.post("/recommend", response_model=RecommendationResponse)
 async def recommend_assessments(request: RecommendationRequest):
