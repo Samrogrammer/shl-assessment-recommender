@@ -194,10 +194,10 @@ async def get_catalog(limit: int = Query(25, ge=1, le=100)):
 @app.post("/recommend", response_model=RecommendationResponse)
 async def recommend_assessments(request: RecommendationRequest):
     """Enhanced recommendation endpoint with better matching"""
+    global catalog_data
     try:
         if not catalog_data:
             # Try to reload catalog
-            global catalog_data
             catalog_data = load_catalog()
             
             if not catalog_data:
