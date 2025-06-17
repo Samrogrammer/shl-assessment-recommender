@@ -21,7 +21,7 @@ import os
 
 # For production (Render) - will use the environment variable
 # For local development - falls back to localhost
-API_URL = os.getenv("API_URL", "https://shl-assessment-recommender-7znk.onrender.com").rstrip('/')
+API_URL = os.getenv("API_URL", "https://shl-assessment-recommender-rfdx.onrender.com").rstrip('/')
 RECOMMENDATION_ENDPOINT = urljoin(API_URL, "/recommend")
 UPLOAD_ENDPOINT = urljoin(API_URL, "/upload")
 CATALOG_ENDPOINT = urljoin(API_URL, "/catalog")
