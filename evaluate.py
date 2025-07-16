@@ -35,24 +35,25 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Sample test queries covering different job roles and skills
+# Sample test queries covering different job roles and skills.
 TEST_QUERIES = [
-    "Data Scientist with Python and machine learning experience",
-    "Sales Manager with customer relationship skills",
-    "Software Engineer proficient in Java and cloud technologies", 
-    "Financial Analyst with Excel and accounting knowledge",
-    "Project Manager with Agile methodology experience",
-    "Customer Service Representative with conflict resolution skills",
-    "Human Resources Specialist with recruitment experience",
-    "Marketing Manager with digital marketing and social media expertise",
-    "Mechanical Engineer with CAD design skills",
-    "Executive Leadership position requiring strategic decision making",
-    "Call center representative with phone support experience",
-    "Remote worker needing self-management skills",
-    "Coding assessment for software developer",
-    "Safety officer for manufacturing environment",
-    "Microsoft Office skills for administrative role"
+    "Data Scientist With Python And Machine Learning Experience.",
+    "Sales Manager With Customer Relationship Skills.",
+    "Software Engineer Proficient In Java And Cloud Technologies.",
+    "Financial Analyst With Excel And Accounting Knowledge.",
+    "Project Manager With Agile Methodology Experience.",
+    "Customer Service Representative With Conflict Resolution Skills.",
+    "Human Resources Specialist With Recruitment Experience.",
+    "Marketing Manager With Digital Marketing And Social Media Expertise.",
+    "Mechanical Engineer With CAD Design Skills.",
+    "Executive Leadership Position Requiring Strategic Decision Making.",
+    "Call Center Representative With Phone Support Experience.",
+    "Remote Worker Needing Self-Management Skills.",
+    "Coding Assessment For Software Developer.",
+    "Safety Officer For Manufacturing Environment.",
+    "Microsoft Office Skills For Administrative Role."
 ]
+
 
 def find_catalog_path() -> str:
     """Find the catalog file in various possible locations"""

@@ -32,7 +32,7 @@ app = FastAPI(
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://shl-streamlit-frontend-a9d3.onrender.com"],  # or explicitly your frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
